@@ -1,0 +1,27 @@
+Replace the paragraph in 'About me' with this paragraph:
+
+As a recent MS in Computer Science graduate from Indiana University Bloomington, I stand at the intersection of imagination and impact in the ever-evolving tech landscape. My journey spans from software engineering at Vodafone Intelligent Solutions to data science research, fueled by a passion for transforming ideas into innovative solutions. I thrive in diverse domains including software development, AI/ML, data analysis, and UI/UX design, constantly pushing the boundaries of what's possible. Beyond my technical pursuits, I'm an avid reader, writer, and nature enthusiast, always seeking to broaden my horizons. I believe in the power of human connections and collaborations to drive true innovation, and I'm excited to connect with fellow tech enthusiasts to create impactful solutions that shape our digital future.
+
+
+Replace 'John Doe' with 'Aditya Shahapure' and make the name look clearer. Remove 'Full Stack Developer' and Location. Replace the paragraph below 'Hello, I'm Aditya Shahapure' with:
+A data-driven problem solver with expertise in software engineering and data science. Recently graduated with an MS in Computer Science from Indiana University, I'm passionate about creating innovative solutions that transform complex challenges into impactful technology.
+
+I do not want to use the slider graphics for technical skills (replace 'Technical Expertise' with 'Skills'). Can you rather use logos of those technologies, along with catchy animations? Also, segregate the skills like this:
+•Languages: Python, Java, SQL, HTML, CSS, JavaScript, TypeScript, C++
+•IDEs/ Software technologies: VS-Code, IntelliJ, Colab, Kaggle, Jupyter, Tableau, PowerBI, Excel, Git, Github, Docker, AWS, Figma, Jira
+•Libraries/Frameworks: TensorFlow, Sklearn, Pandas, NumPy, Pytorch, ReactJS, React-Native, Angular, NextJS, TanStack-Query, NodeJS, Tailwind, Flask
+•Databases: Oracle DB, MySQL, MongoDB, Firebase Firestore
+
+
+For the experience, projects and education section, refer to the attached resume. Remove the text 'Live Demo' and 'Github'. Instead, the site should navigate to the corresponding GitHub page upon clicking on the respective project tile.
+
+Remove the 'Certifications' section and instead include one for 'Achievements'. Mention this in the same:
+- First Prize, University Hackathon (2024) - Led a team of 4 to develop an award-winning Startup Decision Support System that analyzes key KPIs to detect business anomalies and suggest targeted improvements for growth.
+
+- Runner-up, Grant Thornton Case Study Competition - Developed and presented a comprehensive Change Management strategy to help businesses navigate AI integration while effectively mitigating employee unrest.
+
+- 'Star Employee' Recognition, Vodafone Intelligent Solutions - Recognized for exceptional ownership skills and providing critical technical support during high-pressure situations.
+
+Remove 'JD.dev' and the entire footer section.
+
+Also, can you include better animations overall, which stay in place? For example, they should be triggered upon scrolling the page up or down, and not go away by triggering only once after loading the page, which happens to be the case at present.

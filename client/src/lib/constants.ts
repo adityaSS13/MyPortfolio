@@ -1,70 +1,105 @@
 // Personal Information
 export const personalInfo = {
-  name: "John Doe",
-  role: "Full Stack Developer",
-  description: "I build exceptional digital experiences with clean, efficient code. Transforming ideas into engaging web applications that matter.",
-  location: "New York, USA",
-  email: "hello@johndoe.dev",
-  experience: "5+ Years",
+  name: "Aditya Shahapure",
+  role: "Computer Scientist",
+  description: "A data-driven problem solver with expertise in software engineering and data science. Recently graduated with an MS in Computer Science from Indiana University, I'm passionate about creating innovative solutions that transform complex challenges into impactful technology.",
+  email: "adishahapure@gmail.com",
   availability: "Available for work",
   socialLinks: {
-    github: "https://github.com",
-    linkedin: "https://linkedin.com",
+    github: "https://github.com/aditya-shahapure",
+    linkedin: "https://linkedin.com/in/adishahapure",
     twitter: "https://twitter.com",
-    email: "mailto:hello@johndoe.dev"
+    email: "mailto:adishahapure@gmail.com"
   }
 };
 
-// Skills
-export const frontendSkills = [
-  { name: "React", percentage: 90 },
-  { name: "JavaScript / TypeScript", percentage: 85 },
-  { name: "HTML / CSS", percentage: 95 },
-  { name: "Tailwind / SASS", percentage: 80 }
-];
-
-export const backendSkills = [
-  { name: "Node.js / Express", percentage: 85 },
-  { name: "MongoDB / PostgreSQL", percentage: 80 },
-  { name: "GraphQL / REST API", percentage: 75 },
-  { name: "AWS / Cloud Services", percentage: 70 }
-];
-
-export const additionalSkills = [
-  "Git & GitHub",
-  "Docker",
-  "Redux",
-  "Jest",
-  "CI/CD",
-  "Responsive Design",
-  "UI/UX Design",
-  "Agile / Scrum"
+// Skills categorized by type
+export const skillCategories = [
+  {
+    title: "Languages",
+    skills: [
+      { name: "Python", icon: "SiPython" },
+      { name: "Java", icon: "SiJava" },
+      { name: "SQL", icon: "SiPostgresql" },
+      { name: "HTML", icon: "SiHtml5" },
+      { name: "CSS", icon: "SiCss3" },
+      { name: "JavaScript", icon: "SiJavascript" },
+      { name: "TypeScript", icon: "SiTypescript" },
+      { name: "C++", icon: "SiCplusplus" }
+    ]
+  },
+  {
+    title: "IDEs / Software Technologies",
+    skills: [
+      { name: "VS-Code", icon: "SiVisualstudiocode" },
+      { name: "IntelliJ", icon: "SiIntellijidea" },
+      { name: "Colab", icon: "SiGooglecolab" },
+      { name: "Kaggle", icon: "SiKaggle" },
+      { name: "Jupyter", icon: "SiJupyter" },
+      { name: "Tableau", icon: "SiTableau" },
+      { name: "PowerBI", icon: "SiPowerbi" },
+      { name: "Excel", icon: "SiMicrosoftexcel" },
+      { name: "Git", icon: "SiGit" },
+      { name: "Github", icon: "SiGithub" },
+      { name: "Docker", icon: "SiDocker" },
+      { name: "AWS", icon: "SiAmazonaws" },
+      { name: "Figma", icon: "SiFigma" },
+      { name: "Jira", icon: "SiJira" }
+    ]
+  },
+  {
+    title: "Libraries / Frameworks",
+    skills: [
+      { name: "TensorFlow", icon: "SiTensorflow" },
+      { name: "Sklearn", icon: "SiScikit" },
+      { name: "Pandas", icon: "SiPandas" },
+      { name: "NumPy", icon: "SiNumpy" },
+      { name: "PyTorch", icon: "SiPytorch" },
+      { name: "ReactJS", icon: "SiReact" },
+      { name: "React-Native", icon: "SiReact" },
+      { name: "Angular", icon: "SiAngular" },
+      { name: "NextJS", icon: "SiNextdotjs" },
+      { name: "TanStack-Query", icon: "SiReactquery" },
+      { name: "NodeJS", icon: "SiNodedotjs" },
+      { name: "Tailwind", icon: "SiTailwindcss" },
+      { name: "Flask", icon: "SiFlask" }
+    ]
+  },
+  {
+    title: "Databases",
+    skills: [
+      { name: "Oracle DB", icon: "SiOracle" },
+      { name: "MySQL", icon: "SiMysql" },
+      { name: "MongoDB", icon: "SiMongodb" },
+      { name: "Firebase Firestore", icon: "SiFirebase" }
+    ]
+  }
 ];
 
 // Experience
 export const experiences = [
   {
-    title: "Senior Frontend Developer",
-    company: "TechCorp Inc.",
-    period: "2021 - Present",
-    description: "Led a team of developers in building responsive, high-performance web applications. Implemented modern React architectures and mentored junior developers.",
-    technologies: ["React", "TypeScript", "Redux"],
+    title: "Graduate Research Assistant",
+    company: "Indiana University Bloomington",
+    period: "May 2023 - May 2024",
+    description: "Developed REST API for custom Generative AI LLM models in Python and Flask, enabling user requests for AI-based entity analysis. Orchestrated cloud solutions on AWS EC2 with Docker for over 500 simultaneous requests from collaborative research projects.",
+    technologies: ["Python", "Flask", "AWS", "Docker", "LLM"],
     color: "primary"
   },
   {
-    title: "Full Stack Developer",
-    company: "Innovation Labs",
-    period: "2018 - 2021",
-    description: "Designed and developed full-stack applications using Node.js and React. Implemented database schemas and RESTful APIs for various client projects.",
-    technologies: ["Node.js", "MongoDB", "Express"],
+    title: "Software Engineer",
+    company: "Vodafone Intelligent Solutions",
+    period: "July 2019 - July 2022",
+    description: "Led development of a MEAN stack Customer Experience Management App that improved customer satisfaction metrics by 30% through interactive dashboards and data-driven insights. Engineered Python data pipelines to provide seamless data access for different business units across 30+ countries.",
+    technologies: ["MEAN Stack", "Python", "ETL", "Analytics"],
     color: "secondary"
   },
   {
-    title: "Junior Web Developer",
-    company: "Digital Creative Agency",
-    period: "2016 - 2018",
-    description: "Created responsive websites and web applications for clients. Collaborated with designers to implement pixel-perfect interfaces and interactive features.",
-    technologies: ["JavaScript", "HTML/CSS", "jQuery"],
+    title: "Data Science Intern",
+    company: "Quantiphi Inc.",
+    period: "Feb 2019 - June 2019",
+    description: "Created Python deep learning models for speech analytics and sentiment analysis. Specialized in implementing data transformation pipelines and visualization dashboards for clients in the healthcare sector.",
+    technologies: ["Python", "TensorFlow", "NLP", "Data Analysis"],
     color: "info"
   }
 ];
@@ -72,35 +107,31 @@ export const experiences = [
 // Projects
 export const projects = [
   {
-    title: "E-commerce Dashboard",
-    description: "A comprehensive admin dashboard for e-commerce platforms with real-time analytics, inventory management, and order processing.",
-    technologies: ["React", "Node.js", "MongoDB"],
-    demoUrl: "#",
-    githubUrl: "#",
+    title: "InvestiGATE",
+    description: "AI-assisted startup evaluation platform using LLMs to process startup financial data and provide investment readiness scores.",
+    technologies: ["Python", "Flask", "LangChain", "OpenAI"],
+    githubUrl: "https://github.com/aditya-shahapure/InvestiGATE",
     color: "primary"
   },
   {
-    title: "Social Media Platform",
-    description: "A fully-featured social media application with real-time chat, post sharing, and user authentication.",
-    technologies: ["React", "GraphQL", "Postgres"],
-    demoUrl: "#",
-    githubUrl: "#",
+    title: "SenTree",
+    description: "Developed a machine learning model to predict tree growth and health based on environmental data, helping reforestation efforts in areas affected by deforestation.",
+    technologies: ["Python", "TensorFlow", "Pandas", "Scikit-learn"],
+    githubUrl: "https://github.com/aditya-shahapure/SenTree",
     color: "secondary"
   },
   {
-    title: "Task Management App",
-    description: "A productivity app with drag-and-drop task management, team collaboration features, and detailed analytics.",
-    technologies: ["React", "Redux", "Firebase"],
-    demoUrl: "#",
-    githubUrl: "#",
+    title: "TrendCast",
+    description: "Implemented a time-series analysis system that forecasts market trends and provides trading signals with custom algorithmic strategies.",
+    technologies: ["Python", "PyTorch", "Plotly", "NumPy"],
+    githubUrl: "https://github.com/aditya-shahapure/TrendCast",
     color: "info"
   },
   {
-    title: "Finance Tracker",
-    description: "Personal finance application with expense tracking, budget management, and visual reporting of spending habits.",
-    technologies: ["Vue.js", "Express", "MySQL"],
-    demoUrl: "#",
-    githubUrl: "#",
+    title: "Portfolio Website",
+    description: "Modern, responsive portfolio website built with React and Framer Motion, featuring dark theme and animated UI components.",
+    technologies: ["React", "TypeScript", "Tailwind CSS", "Framer Motion"],
+    githubUrl: "https://github.com/aditya-shahapure/portfolio",
     color: "success"
   }
 ];
@@ -108,38 +139,38 @@ export const projects = [
 // Education
 export const education = [
   {
-    degree: "Master of Computer Science",
-    institution: "Stanford University",
-    period: "2014 - 2016",
-    description: "Specialized in Software Engineering and Artificial Intelligence. Graduated with honors and completed a thesis on scalable web application architectures."
+    degree: "Master of Science in Computer Science",
+    institution: "Indiana University Bloomington",
+    period: "2022 - 2024",
+    description: "Specialized in Data Science, Machine Learning, and Software Engineering. Completed coursework in Advanced AI, Cloud Computing, and Database Systems. Achieved a GPA of 3.9/4.0."
   },
   {
-    degree: "Bachelor of Science in Computer Science",
-    institution: "University of Washington",
-    period: "2010 - 2014",
-    description: "Core curriculum with focus on algorithms, data structures, and web development. Minor in Mathematics. Participated in multiple hackathons and coding competitions."
+    degree: "Bachelor of Engineering in Computer Engineering",
+    institution: "Mumbai University",
+    period: "2015 - 2019",
+    description: "Focused on algorithms, data structures, and software development. Participated in multiple hackathons and coding competitions. Graduated with First Class Honors."
   }
 ];
 
-// Certifications
-export const certifications = [
+// Achievements
+export const achievements = [
   {
-    name: "AWS Certified Solutions Architect",
-    issuer: "Amazon Web Services",
-    year: "2022",
-    description: "Professional certification for designing distributed systems on AWS Cloud platform."
+    title: "First Prize, University Hackathon",
+    organization: "Indiana University",
+    year: "2024",
+    description: "Led a team of 4 to develop an award-winning Startup Decision Support System that analyzes key KPIs to detect business anomalies and suggest targeted improvements for growth."
   },
   {
-    name: "Professional Full Stack Engineer",
-    issuer: "MongoDB University",
+    title: "Runner-up, Grant Thornton Case Study Competition",
+    organization: "Grant Thornton",
+    year: "2023",
+    description: "Developed and presented a comprehensive Change Management strategy to help businesses navigate AI integration while effectively mitigating employee unrest."
+  },
+  {
+    title: "'Star Employee' Recognition",
+    organization: "Vodafone Intelligent Solutions",
     year: "2021",
-    description: "Comprehensive certification in building modern applications with MongoDB, Express, React, and Node.js."
-  },
-  {
-    name: "Frontend Web Developer Nanodegree",
-    issuer: "Udacity",
-    year: "2019",
-    description: "Intensive program covering advanced JavaScript, responsive design, and modern frontend frameworks."
+    description: "Recognized for exceptional ownership skills and providing critical technical support during high-pressure situations."
   }
 ];
 
@@ -150,5 +181,6 @@ export const navLinks = [
   { name: "Experience", href: "#experience" },
   { name: "Projects", href: "#projects" },
   { name: "Education", href: "#education" },
+  { name: "Achievements", href: "#achievements" },
   { name: "Contact", href: "#contact" }
 ];

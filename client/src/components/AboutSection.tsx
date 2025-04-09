@@ -12,7 +12,7 @@ export default function AboutSection() {
           variants={staggerContainer}
           initial="hidden"
           whileInView="show"
-          viewport={{ once: true, amount: 0.25 }}
+          viewport={{ once: false, amount: 0.25 }}
           className="flex flex-col md:flex-row gap-12 items-center"
         >
           {/* Profile Image */}
@@ -47,42 +47,25 @@ export default function AboutSection() {
           >
             <div className="mb-6">
               <h2 className="text-sm uppercase tracking-wider text-primary mb-2">About Me</h2>
-              <h3 className="text-3xl font-bold mb-4">A passionate Full Stack Developer based in {personalInfo.location}</h3>
+              <h3 className="text-3xl font-bold mb-4">A passionate Computer Scientist</h3>
             </div>
             
             <div className="space-y-4 text-muted-foreground leading-relaxed">
               <p>
-                I am a dedicated full-stack developer with over 5 years of experience building 
-                intuitive web applications. I'm passionate about creating clean, efficient code 
-                and delivering exceptional user experiences.
+                As a recent MS in Computer Science graduate from Indiana University Bloomington, I stand at the intersection of imagination and impact in the ever-evolving tech landscape. My journey spans from software engineering at Vodafone Intelligent Solutions to data science research, fueled by a passion for transforming ideas into innovative solutions.
               </p>
               <p>
-                My expertise spans the entire development lifecycle, from planning and design 
-                to implementation and maintenance. I enjoy tackling complex problems and finding 
-                elegant solutions that balance technical requirements with user needs.
+                I thrive in diverse domains including software development, AI/ML, data analysis, and UI/UX design, constantly pushing the boundaries of what's possible through technology.
               </p>
               <p>
-                When I'm not coding, you can find me exploring new technologies, contributing 
-                to open-source projects, or sharing my knowledge through writing and mentoring.
+                When I'm not coding, you can find me exploring new technologies, contributing to open-source projects, or sharing my knowledge through writing and mentoring.
               </p>
             </div>
             
-            <div className="mt-8 grid grid-cols-2 gap-6">
-              <div>
-                <h4 className="text-foreground font-medium mb-2">Name</h4>
-                <p className="text-muted-foreground">{personalInfo.name}</p>
-              </div>
+            <div className="mt-8 grid gap-6">
               <div>
                 <h4 className="text-foreground font-medium mb-2">Email</h4>
                 <p className="text-muted-foreground">{personalInfo.email}</p>
-              </div>
-              <div>
-                <h4 className="text-foreground font-medium mb-2">Location</h4>
-                <p className="text-muted-foreground">{personalInfo.location}</p>
-              </div>
-              <div>
-                <h4 className="text-foreground font-medium mb-2">Experience</h4>
-                <p className="text-muted-foreground">{personalInfo.experience}</p>
               </div>
             </div>
             

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "wouter";
 import { motion, AnimatePresence } from "framer-motion";
-import { navLinks } from "@/lib/constants";
+import { navLinks, personalInfo } from "@/lib/constants";
 import { Menu, X } from "lucide-react";
 
 export default function Navbar() {
@@ -43,13 +43,17 @@ export default function Navbar() {
     if (mobileMenuOpen) setMobileMenuOpen(false);
   };
 
+  // Get first name and last initial
+  const nameInitials = personalInfo.name.split(' ');
+  const firstNameInitial = nameInitials[0][0];
+  const lastNameInitial = nameInitials.length > 1 ? nameInitials[1][0] : '';
+
   return (
     <header className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? "bg-background/80 backdrop-blur-md border-b border-border" : "bg-transparent"}`}>
       <nav className="container mx-auto px-6 py-3 flex justify-between items-center">
         <Link href="/" className="text-2xl font-semibold flex items-center">
-          <span className="text-primary">J</span>
-          <span className="text-secondary">D</span>
-          <span className="text-xs ml-1 text-muted-foreground">.dev</span>
+          <span className="text-primary">{firstNameInitial}</span>
+          <span className="text-secondary">{lastNameInitial}</span>
         </Link>
         
         {/* Desktop Navigation */}

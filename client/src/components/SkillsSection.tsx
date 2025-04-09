@@ -1,9 +1,8 @@
 import { motion } from "framer-motion";
 import { fadeIn, staggerContainer } from "@/lib/animation";
-import { frontendSkills, backendSkills, additionalSkills } from "@/lib/constants";
-import { Code, Server } from "lucide-react";
-import { Progress } from "@/components/ui/progress";
-import { Badge } from "@/components/ui/badge";
+import { skillCategories } from "@/lib/constants";
+import * as SiIcons from "react-icons/si";
+import { Card, CardContent } from "@/components/ui/card";
 
 export default function SkillsSection() {
   return (
@@ -13,7 +12,7 @@ export default function SkillsSection() {
           variants={staggerContainer}
           initial="hidden"
           whileInView="show"
-          viewport={{ once: true, amount: 0.25 }}
+          viewport={{ once: false, amount: 0.25 }}
           className="text-center mb-16"
         >
           <motion.h2 
@@ -26,97 +25,52 @@ export default function SkillsSection() {
             variants={fadeIn("up", 0.2)}
             className="text-3xl font-bold"
           >
-            Technical Expertise
+            Skills
           </motion.h3>
         </motion.div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-          {/* Frontend Skills */}
+        {/* Skill Categories */}
+        {skillCategories.map((category, categoryIndex) => (
           <motion.div
-            variants={fadeIn("right", 0.3)}
+            key={category.title}
+            variants={fadeIn("up", 0.3 + (0.1 * categoryIndex))}
             initial="hidden"
             whileInView="show"
-            viewport={{ once: true, amount: 0.25 }}
+            viewport={{ once: false, amount: 0.25 }}
+            className="mb-16"
           >
-            <h4 className="text-xl font-semibold mb-6 flex items-center">
-              <Code className="text-primary mr-3" />
-              Frontend Development
+            <h4 className="text-xl font-semibold mb-8 text-center">
+              {category.title}
             </h4>
             
-            <div className="space-y-6">
-              {frontendSkills.map((skill, index) => (
-                <motion.div 
-                  key={skill.name}
-                  variants={fadeIn("right", 0.1 * (index + 1))}
-                  className="relative"
-                >
-                  <div className="flex justify-between mb-2">
-                    <span className="text-foreground font-medium">{skill.name}</span>
-                    <span className="text-muted-foreground">{skill.percentage}%</span>
-                  </div>
-                  <Progress value={skill.percentage} className="h-2" />
-                </motion.div>
-              ))}
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+              {category.skills.map((skill, index) => {
+                // Dynamically get the icon from react-icons/si
+                const IconComponent = SiIcons[skill.icon as keyof typeof SiIcons];
+                
+                return (
+                  <motion.div
+                    key={skill.name}
+                    variants={fadeIn("up", 0.1 * (index + 1))}
+                    whileHover={{ y: -10 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <Card className="h-full bg-card hover:bg-card/50 border border-border hover:border-primary/30 transition-all duration-300">
+                      <CardContent className="p-6 flex flex-col items-center justify-center gap-3">
+                        {IconComponent && (
+                          <div className="text-4xl text-primary">
+                            <IconComponent />
+                          </div>
+                        )}
+                        <p className="text-sm font-medium text-center">{skill.name}</p>
+                      </CardContent>
+                    </Card>
+                  </motion.div>
+                );
+              })}
             </div>
           </motion.div>
-          
-          {/* Backend Skills */}
-          <motion.div
-            variants={fadeIn("left", 0.3)}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, amount: 0.25 }}
-          >
-            <h4 className="text-xl font-semibold mb-6 flex items-center">
-              <Server className="text-secondary mr-3" />
-              Backend Development
-            </h4>
-            
-            <div className="space-y-6">
-              {backendSkills.map((skill, index) => (
-                <motion.div 
-                  key={skill.name}
-                  variants={fadeIn("left", 0.1 * (index + 1))}
-                  className="relative"
-                >
-                  <div className="flex justify-between mb-2">
-                    <span className="text-foreground font-medium">{skill.name}</span>
-                    <span className="text-muted-foreground">{skill.percentage}%</span>
-                  </div>
-                  <Progress value={skill.percentage} className="h-2 bg-card" 
-                    indicatorClassName="bg-secondary" />
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-        </div>
-        
-        {/* Additional Skills */}
-        <motion.div
-          variants={fadeIn("up", 0.4)}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.25 }}
-          className="mt-16"
-        >
-          <h4 className="text-xl font-semibold mb-6 text-center">Additional Skills</h4>
-          <div className="flex flex-wrap justify-center gap-3">
-            {additionalSkills.map((skill) => (
-              <motion.div 
-                key={skill}
-                variants={fadeIn("up", 0.1)}
-                whileHover={{ scale: 1.05 }}
-              >
-                <Badge 
-                  variant="outline" 
-                  className="px-4 py-2 bg-card text-muted-foreground rounded-full text-sm border border-border hover:border-primary/50 hover:text-primary transition duration-300"
-                >
-                  {skill}
-                </Badge>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
+        ))}
       </div>
     </section>
   );

@@ -20,7 +20,8 @@ export default function HeroSection() {
         <motion.div
           variants={fadeIn("up")}
           initial="hidden"
-          animate="show"
+          whileInView="show"
+          viewport={{ once: false }}
           className="max-w-3xl mx-auto text-center"
         >
           <div className="mb-6 inline-block">
