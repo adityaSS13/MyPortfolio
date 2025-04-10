@@ -67,7 +67,11 @@ export default function Home() {
       <ScrollProgress />
       
       {/* Game Controller UI */}
-      <GameController onNavigate={handleControllerNavigate} />
+      <GameController 
+        onNavigate={handleControllerNavigate} 
+        isOpen={isControllerOpen}
+        onToggle={() => setIsControllerOpen(prev => !prev)}
+      />
       
       {/* Button to toggle controller (visible on small screens) */}
       <button 

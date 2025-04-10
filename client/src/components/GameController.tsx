@@ -125,7 +125,7 @@ export default function GameController({ onNavigate, isOpen = true, onToggle }: 
       window.removeEventListener("keydown", handleKeyDown);
       window.removeEventListener("keyup", handleKeyUp);
     };
-  }, [activeIndex, isOpen, onNavigate]);
+  }, [activeIndex, isControllerOpen, onNavigate]);
 
   const handleUp = () => {
     setButtonPresses(prev => ({ ...prev, up: true }));
@@ -179,7 +179,7 @@ export default function GameController({ onNavigate, isOpen = true, onToggle }: 
       </motion.button>
 
       <AnimatePresence>
-        {isOpen && (
+        {isControllerOpen && (
           <div className="h-full flex flex-col pointer-events-auto">
             
             {/* Left Side Panel */}
@@ -392,7 +392,7 @@ export default function GameController({ onNavigate, isOpen = true, onToggle }: 
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              onClick={() => setIsOpen(false)}
+              onClick={() => setIsControllerOpen(false)}
             />
           </div>
         )}
