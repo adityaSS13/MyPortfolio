@@ -1,6 +1,13 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { navLinks, personalInfo } from "@/lib/constants";
+
+// Extend Window interface to add our custom property
+declare global {
+  interface Window {
+    prevScrollY?: number;
+  }
+}
 
 interface GameControllerProps {
   onNavigate: (section: string) => void;
@@ -22,6 +29,10 @@ export default function GameController({ onNavigate, isOpen = true, onToggle }: 
     b: false,
     y: false
   });
+  
+  // Track scroll direction for button animation
+  const [scrollDir, setScrollDir] = useState("none");
+  const scrollTimeout = useRef<NodeJS.Timeout | null>(null);
   
   // Auto-hide tooltip after 7 seconds
   useEffect(() => {
@@ -127,6 +138,45 @@ export default function GameController({ onNavigate, isOpen = true, onToggle }: 
     };
   }, [activeIndex, isControllerOpen, onNavigate]);
 
+  // Handle scroll effects to animate controller buttons
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY;
+      const prevScrollPosition = window.prevScrollY || 0;
+      
+      // Determine scroll direction
+      if (scrollPosition > prevScrollPosition) {
+        setScrollDir("down");
+        setButtonPresses(prev => ({ ...prev, down: true }));
+        
+        // Reset after a short delay
+        if (scrollTimeout.current) clearTimeout(scrollTimeout.current);
+        scrollTimeout.current = setTimeout(() => {
+          setButtonPresses(prev => ({ ...prev, down: false }));
+        }, 200);
+      } else if (scrollPosition < prevScrollPosition) {
+        setScrollDir("up");
+        setButtonPresses(prev => ({ ...prev, up: true }));
+        
+        // Reset after a short delay
+        if (scrollTimeout.current) clearTimeout(scrollTimeout.current);
+        scrollTimeout.current = setTimeout(() => {
+          setButtonPresses(prev => ({ ...prev, up: false }));
+        }, 200);
+      }
+      
+      // Save current position for next comparison
+      window.prevScrollY = scrollPosition;
+    };
+    
+    window.addEventListener("scroll", handleScroll);
+    
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      if (scrollTimeout.current) clearTimeout(scrollTimeout.current);
+    };
+  }, []);
+
   const handleUp = () => {
     setButtonPresses(prev => ({ ...prev, up: true }));
     setActiveIndex(prev => (prev === 0 ? navLinks.length - 1 : prev - 1));
@@ -227,31 +277,36 @@ export default function GameController({ onNavigate, isOpen = true, onToggle }: 
                   )}
                 </AnimatePresence>
                 
-                {/* Controller Body */}
+                {/* Controller Body - PlayStation Style */}
                 <motion.div
-                  className="w-[220px] h-[140px] bg-gradient-to-br from-gray-800 via-gray-900 to-gray-800 rounded-2xl shadow-2xl border-2 border-gray-700 p-4 flex flex-col items-center justify-between"
+                  className="w-[280px] h-[180px] bg-[#303030] rounded-[30px] shadow-2xl border border-gray-700 p-5 flex flex-col items-center justify-between relative"
                   whileHover={{ y: -5 }}
                   initial={{ y: 0 }}
                   animate={{ boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.5)" }}
                 >
                   {/* Left Side Grip */}
-                  <div className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1 w-3 h-24 bg-gradient-to-r from-gray-800 to-gray-900 rounded-l-full"></div>
+                  <div className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1 w-5 h-32 bg-[#303030] rounded-l-[40px]"></div>
                   
                   {/* Right Side Grip */}
-                  <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1 w-3 h-24 bg-gradient-to-r from-gray-900 to-gray-800 rounded-r-full"></div>
+                  <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1 w-5 h-32 bg-[#303030] rounded-r-[40px]"></div>
 
-                  {/* Top Highlights */}
-                  <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-32 h-1 bg-gradient-to-r from-transparent via-gray-600 to-transparent rounded-full"></div>
+                  {/* Central Rectangle */}
+                  <div className="absolute left-1/2 top-0 -translate-x-1/2 w-36 h-8 bg-[#262626] rounded-md"></div>
+
+                  {/* Central Speaker/Touchpad */}
+                  <div className="absolute top-4 left-1/2 transform -translate-x-1/2 w-20 h-8 bg-[#262626] rounded-md flex items-center justify-center">
+                    <div className="w-12 h-3 bg-[#3a3a3a] rounded-sm"></div>
+                  </div>
                   
-                  {/* D-Pad */}
-                  <div className="absolute left-8 top-[calc(50%-14px)] w-16 h-16">
+                  {/* D-Pad (Left) */}
+                  <div className="absolute left-12 top-[calc(50%+5px)] w-16 h-16">
                     <div className="relative w-full h-full">
-                      {/* D-Pad Background */}
-                      <div className="absolute inset-0 bg-gray-900 rounded-full shadow-inner"></div>
+                      {/* D-Pad Gray Background */}
+                      <div className="absolute inset-0 w-14 h-14 bg-[#262626] rounded-full shadow-inner"></div>
                       
                       {/* Up Button */}
                       <motion.button
-                        className={`absolute top-0 left-1/2 transform -translate-x-1/2 w-6 h-6 bg-gray-800 rounded-md flex items-center justify-center border border-gray-700 ${buttonPresses.up ? 'bg-gray-700' : 'hover:bg-gray-700'}`}
+                        className={`absolute top-0 left-1/2 transform -translate-x-1/2 w-7 h-7 bg-[#222] rounded-md flex items-center justify-center ${buttonPresses.up ? 'bg-[#333] border-[#444]' : 'hover:bg-[#333]'}`}
                         onClick={handleUp}
                         whileTap={{ scale: 0.9 }}
                         animate={buttonPresses.up ? { y: 2 } : { y: 0 }}
@@ -261,9 +316,20 @@ export default function GameController({ onNavigate, isOpen = true, onToggle }: 
                         </svg>
                       </motion.button>
                       
+                      {/* Right Button */}
+                      <motion.button
+                        className={`absolute right-0 top-1/2 transform -translate-y-1/2 w-7 h-7 bg-[#222] rounded-md flex items-center justify-center ${buttonPresses.right ? 'bg-[#333] border-[#444]' : 'hover:bg-[#333]'}`}
+                        whileTap={{ scale: 0.9 }}
+                        animate={buttonPresses.right ? { x: 2 } : { x: 0 }}
+                      >
+                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-300">
+                          <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
+                      </motion.button>
+                      
                       {/* Down Button */}
                       <motion.button
-                        className={`absolute bottom-0 left-1/2 transform -translate-x-1/2 w-6 h-6 bg-gray-800 rounded-md flex items-center justify-center border border-gray-700 ${buttonPresses.down ? 'bg-gray-700' : 'hover:bg-gray-700'}`}
+                        className={`absolute bottom-0 left-1/2 transform -translate-x-1/2 w-7 h-7 bg-[#222] rounded-md flex items-center justify-center ${buttonPresses.down ? 'bg-[#333] border-[#444]' : 'hover:bg-[#333]'}`}
                         onClick={handleDown}
                         whileTap={{ scale: 0.9 }}
                         animate={buttonPresses.down ? { y: -2 } : { y: 0 }}
@@ -273,49 +339,88 @@ export default function GameController({ onNavigate, isOpen = true, onToggle }: 
                         </svg>
                       </motion.button>
                       
+                      {/* Left Button */}
+                      <motion.button
+                        className={`absolute left-0 top-1/2 transform -translate-y-1/2 w-7 h-7 bg-[#222] rounded-md flex items-center justify-center ${buttonPresses.left ? 'bg-[#333] border-[#444]' : 'hover:bg-[#333]'}`}
+                        whileTap={{ scale: 0.9 }}
+                        animate={buttonPresses.left ? { x: -2 } : { x: 0 }}
+                      >
+                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-300">
+                          <polyline points="15 18 9 12 15 6"></polyline>
+                        </svg>
+                      </motion.button>
+                      
                       {/* Center */}
-                      <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-5 h-5 bg-gray-800 rounded-md flex items-center justify-center">
-                        <div className="w-1.5 h-1.5 bg-gray-700 rounded-full"></div>
-                      </div>
+                      <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-3 h-3 bg-[#222] rounded-sm"></div>
                     </div>
                   </div>
                   
-                  {/* Action Buttons */}
-                  <div className="absolute right-8 top-[calc(50%-14px)] w-16 h-16">
+                  {/* Action Buttons (Right) */}
+                  <div className="absolute right-10 top-[calc(50%+5px)] w-20 h-20">
                     <div className="relative w-full h-full">
-                      {/* Buttons Background */}
-                      <div className="absolute inset-0 bg-gray-900 rounded-full shadow-inner"></div>
+                      {/* Buttons Gray Background */}
+                      <div className="absolute inset-0 w-14 h-14 bg-[#262626] rounded-full shadow-inner"></div>
                       
-                      {/* X Button */}
+                      {/* Triangle Button (Top) */}
                       <motion.button
-                        className={`absolute top-0 left-1/2 transform -translate-x-1/2 w-7 h-7 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-xs border-2 border-blue-700 ${buttonPresses.x ? 'opacity-80' : 'hover:bg-blue-500'}`}
-                        onClick={handleSelect}
-                        whileTap={{ scale: 0.9 }}
-                        animate={buttonPresses.x ? { y: 2 } : { y: 0 }}
+                        className={`absolute top-0 left-1/2 transform -translate-x-1/2 w-9 h-9 rounded-full bg-[#7F7F7F] text-white flex items-center justify-center ${buttonPresses.y ? 'opacity-80' : 'hover:opacity-90'}`}
+                        whileTap={{ scale: 0.95 }}
+                        animate={buttonPresses.y ? { y: 2 } : { y: 0 }}
                       >
-                        X
+                        <div className="w-4 h-4 border-t-2 border-l-2 border-r-2 border-[#222] transform rotate-180"></div>
                       </motion.button>
                       
-                      {/* A Button */}
+                      {/* Circle Button (Right) */}
                       <motion.div
-                        className={`absolute bottom-0 left-1/2 transform -translate-x-1/2 w-7 h-7 rounded-full bg-green-500 text-white flex items-center justify-center font-bold text-xs border-2 border-green-600 ${buttonPresses.a ? 'opacity-80' : 'hover:bg-green-400'}`}
-                        whileTap={{ scale: 0.9 }}
-                        animate={buttonPresses.a ? { y: -2 } : { y: 0 }}
+                        className={`absolute right-0 top-1/2 transform -translate-y-1/2 w-9 h-9 rounded-full bg-[#bc2025] flex items-center justify-center ${buttonPresses.b ? 'opacity-80' : 'hover:opacity-90'}`}
+                        whileTap={{ scale: 0.95 }}
+                        animate={buttonPresses.b ? { x: 2 } : { x: 0 }}
                       >
-                        A
+                        <div className="w-5 h-5 rounded-full border-2 border-[#222]"></div>
+                      </motion.div>
+                      
+                      {/* Cross Button (Bottom) */}
+                      <motion.div
+                        className={`absolute bottom-0 left-1/2 transform -translate-x-1/2 w-9 h-9 rounded-full bg-[#2a6db3] flex items-center justify-center ${buttonPresses.x ? 'opacity-80' : 'hover:opacity-90'}`}
+                        onClick={handleSelect}
+                        whileTap={{ scale: 0.95 }}
+                        animate={buttonPresses.x ? { y: -2 } : { y: 0 }}
+                      >
+                        <div className="relative">
+                          <div className="absolute w-5 h-1 bg-[#222] top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></div>
+                          <div className="absolute w-1 h-5 bg-[#222] top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></div>
+                        </div>
+                      </motion.div>
+                      
+                      {/* Square Button (Left) */}
+                      <motion.div
+                        className={`absolute left-0 top-1/2 transform -translate-y-1/2 w-9 h-9 rounded-full bg-[#69be28] flex items-center justify-center ${buttonPresses.a ? 'opacity-80' : 'hover:opacity-90'}`}
+                        whileTap={{ scale: 0.95 }}
+                        animate={buttonPresses.a ? { x: -2 } : { x: 0 }}
+                      >
+                        <div className="w-4 h-4 bg-[#222]"></div>
                       </motion.div>
                     </div>
                   </div>
                   
-                  {/* Controller Logo */}
-                  <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 text-[8px] font-mono text-primary font-semibold">
-                    PORTFOLIO CONTROLLER
+                  {/* Analog Sticks */}
+                  <div className="absolute bottom-8 left-[38%] transform -translate-x-1/2 w-10 h-10">
+                    <div className="w-full h-full rounded-full bg-[#222] flex items-center justify-center shadow-lg">
+                      <div className="w-7 h-7 rounded-full bg-[#3a3a3a]"></div>
+                    </div>
                   </div>
                   
-                  {/* Light Indicators */}
-                  <div className="absolute top-2 left-1/2 transform -translate-x-1/2 flex gap-8">
-                    <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></div>
-                    <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse delay-300"></div>
+                  <div className="absolute bottom-8 right-[38%] transform translate-x-1/2 w-10 h-10">
+                    <div className="w-full h-full rounded-full bg-[#222] flex items-center justify-center shadow-lg">
+                      <div className="w-7 h-7 rounded-full bg-[#3a3a3a]"></div>
+                    </div>
+                  </div>
+                  
+                  {/* PS Button */}
+                  <div className="absolute bottom-3 left-1/2 transform -translate-x-1/2 text-xs text-gray-400 font-mono">
+                    <div className="w-6 h-6 rounded-full bg-[#3a3a3a] flex items-center justify-center">
+                      <span className="text-[8px] font-bold">PS</span>
+                    </div>
                   </div>
                 </motion.div>
               </div>
