@@ -9,9 +9,26 @@ import EducationSection from "@/components/EducationSection";
 import AchievementsSection from "@/components/AchievementsSection";
 import ContactSection from "@/components/ContactSection";
 import ScrollProgress from "@/components/ScrollProgress";
+import GameController from "@/components/GameController";
 
 export default function Home() {
   // Handle smooth scrolling for anchor links
+  const handleSmoothScroll = (hash: string) => {
+    const targetElement = document.querySelector(hash);
+    
+    if (targetElement) {
+      window.scrollTo({
+        top: targetElement.getBoundingClientRect().top + window.scrollY - 80,
+        behavior: 'smooth'
+      });
+    }
+  };
+  
+  // Handle controller navigation
+  const handleControllerNavigate = (hash: string) => {
+    handleSmoothScroll(hash);
+  };
+
   useEffect(() => {
     const handleAnchorClick = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
@@ -19,14 +36,7 @@ export default function Home() {
       
       if (anchor && anchor.hash && anchor.hash.startsWith('#')) {
         e.preventDefault();
-        const targetElement = document.querySelector(anchor.hash);
-        
-        if (targetElement) {
-          window.scrollTo({
-            top: targetElement.getBoundingClientRect().top + window.scrollY - 80,
-            behavior: 'smooth'
-          });
-        }
+        handleSmoothScroll(anchor.hash);
       }
     };
 
@@ -41,6 +51,7 @@ export default function Home() {
     <div className="bg-background text-foreground min-h-screen overflow-x-hidden">
       <ScrollProgress />
       <Navbar />
+      <GameController onNavigate={handleControllerNavigate} />
       <HeroSection />
       <AboutSection />
       <SkillsSection />
