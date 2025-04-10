@@ -32,7 +32,9 @@ export default function GameController({ onNavigate, isOpen = true, onToggle }: 
   
   // Track scroll direction for button animation
   const [scrollDir, setScrollDir] = useState("none");
+  const [isHovering, setIsHovering] = useState<string | null>(null);
   const scrollTimeout = useRef<NodeJS.Timeout | null>(null);
+  const lastMouseY = useRef<number | null>(null);
   
   // Auto-hide tooltip after 7 seconds
   useEffect(() => {
@@ -57,11 +59,11 @@ export default function GameController({ onNavigate, isOpen = true, onToggle }: 
       
       switch (e.key) {
         case "ArrowUp":
-          setButtonPresses(prev => ({ ...prev, up: true }));
+          // Don't animate up button, just change the index
           setActiveIndex(prev => (prev === 0 ? navLinks.length - 1 : prev - 1));
           break;
         case "ArrowDown":
-          setButtonPresses(prev => ({ ...prev, down: true }));
+          // Don't animate down button, just change the index
           setActiveIndex(prev => (prev === navLinks.length - 1 ? 0 : prev + 1));
           break;
         case "ArrowLeft":
@@ -279,154 +281,185 @@ export default function GameController({ onNavigate, isOpen = true, onToggle }: 
                 
                 {/* Controller Body - PlayStation Style */}
                 <motion.div
-                  className="w-[280px] h-[180px] bg-[#303030] rounded-[30px] shadow-2xl border border-gray-700 p-5 flex flex-col items-center justify-between relative"
+                  className="w-[280px] h-[160px] bg-[#444] rounded-[40px] shadow-2xl p-5 flex flex-col items-center justify-between relative"
                   whileHover={{ y: -5 }}
                   initial={{ y: 0 }}
                   animate={{ boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.5)" }}
                 >
                   {/* Left Side Grip */}
-                  <div className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1 w-5 h-32 bg-[#303030] rounded-l-[40px]"></div>
+                  <div className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1 w-5 h-28 bg-[#444] rounded-l-[40px]"></div>
                   
                   {/* Right Side Grip */}
-                  <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1 w-5 h-32 bg-[#303030] rounded-r-[40px]"></div>
+                  <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1 w-5 h-28 bg-[#444] rounded-r-[40px]"></div>
 
-                  {/* Central Rectangle */}
-                  <div className="absolute left-1/2 top-0 -translate-x-1/2 w-36 h-8 bg-[#262626] rounded-md"></div>
-
-                  {/* Central Speaker/Touchpad */}
-                  <div className="absolute top-4 left-1/2 transform -translate-x-1/2 w-20 h-8 bg-[#262626] rounded-md flex items-center justify-center">
-                    <div className="w-12 h-3 bg-[#3a3a3a] rounded-sm"></div>
-                  </div>
-                  
                   {/* D-Pad (Left) */}
-                  <div className="absolute left-12 top-[calc(50%+5px)] w-16 h-16">
+                  <div className="absolute left-16 top-1/2 -translate-y-1/2 w-16 h-16">
                     <div className="relative w-full h-full">
-                      {/* D-Pad Gray Background */}
-                      <div className="absolute inset-0 w-14 h-14 bg-[#262626] rounded-full shadow-inner"></div>
+                      {/* D-Pad Background */}
+                      <div className="absolute inset-0 w-14 h-14 bg-[#333] rounded-full"></div>
                       
-                      {/* Up Button */}
-                      <motion.button
-                        className={`absolute top-0 left-1/2 transform -translate-x-1/2 w-7 h-7 bg-[#222] rounded-md flex items-center justify-center ${buttonPresses.up ? 'bg-[#333] border-[#444]' : 'hover:bg-[#333]'}`}
-                        onClick={handleUp}
-                        whileTap={{ scale: 0.9 }}
-                        animate={buttonPresses.up ? { y: 2 } : { y: 0 }}
-                      >
-                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-300">
-                          <polyline points="18 15 12 9 6 15"></polyline>
-                        </svg>
-                      </motion.button>
-                      
-                      {/* Right Button */}
-                      <motion.button
-                        className={`absolute right-0 top-1/2 transform -translate-y-1/2 w-7 h-7 bg-[#222] rounded-md flex items-center justify-center ${buttonPresses.right ? 'bg-[#333] border-[#444]' : 'hover:bg-[#333]'}`}
-                        whileTap={{ scale: 0.9 }}
-                        animate={buttonPresses.right ? { x: 2 } : { x: 0 }}
-                      >
-                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-300">
-                          <polyline points="9 18 15 12 9 6"></polyline>
-                        </svg>
-                      </motion.button>
-                      
-                      {/* Down Button */}
-                      <motion.button
-                        className={`absolute bottom-0 left-1/2 transform -translate-x-1/2 w-7 h-7 bg-[#222] rounded-md flex items-center justify-center ${buttonPresses.down ? 'bg-[#333] border-[#444]' : 'hover:bg-[#333]'}`}
-                        onClick={handleDown}
-                        whileTap={{ scale: 0.9 }}
-                        animate={buttonPresses.down ? { y: -2 } : { y: 0 }}
-                      >
-                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-300">
-                          <polyline points="6 9 12 15 18 9"></polyline>
-                        </svg>
-                      </motion.button>
-                      
-                      {/* Left Button */}
-                      <motion.button
-                        className={`absolute left-0 top-1/2 transform -translate-y-1/2 w-7 h-7 bg-[#222] rounded-md flex items-center justify-center ${buttonPresses.left ? 'bg-[#333] border-[#444]' : 'hover:bg-[#333]'}`}
-                        whileTap={{ scale: 0.9 }}
-                        animate={buttonPresses.left ? { x: -2 } : { x: 0 }}
-                      >
-                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-300">
-                          <polyline points="15 18 9 12 15 6"></polyline>
-                        </svg>
-                      </motion.button>
-                      
-                      {/* Center */}
-                      <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-3 h-3 bg-[#222] rounded-sm"></div>
+                      {/* Cross shaped D-pad as one element */}
+                      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12">
+                        {/* Up Button */}
+                        <motion.button
+                          className={`absolute top-0 left-1/2 -translate-x-1/2 w-6 h-6 bg-[#222] rounded-sm flex items-center justify-center ${buttonPresses.up ? 'bg-[#333]' : 'hover:bg-[#333]'}`}
+                          onClick={handleUp}
+                          animate={buttonPresses.up ? { y: 2 } : { y: 0 }}
+                        >
+                          <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-300">
+                            <polyline points="18 15 12 9 6 15"></polyline>
+                          </svg>
+                        </motion.button>
+                        
+                        {/* Down Button */}
+                        <motion.button
+                          className={`absolute bottom-0 left-1/2 -translate-x-1/2 w-6 h-6 bg-[#222] rounded-sm flex items-center justify-center ${buttonPresses.down ? 'bg-[#333]' : 'hover:bg-[#333]'}`}
+                          onClick={handleDown}
+                          animate={buttonPresses.down ? { y: -2 } : { y: 0 }}
+                        >
+                          <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-300">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                          </svg>
+                        </motion.button>
+                        
+                        {/* Left Button */}
+                        <motion.button
+                          className={`absolute left-0 top-1/2 -translate-y-1/2 w-6 h-6 bg-[#222] rounded-sm flex items-center justify-center ${buttonPresses.left ? 'bg-[#333]' : 'hover:bg-[#333]'}`}
+                          animate={buttonPresses.left ? { x: -2 } : { x: 0 }}
+                        >
+                          <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-300">
+                            <polyline points="15 18 9 12 15 6"></polyline>
+                          </svg>
+                        </motion.button>
+                        
+                        {/* Right Button */}
+                        <motion.button
+                          className={`absolute right-0 top-1/2 -translate-y-1/2 w-6 h-6 bg-[#222] rounded-sm flex items-center justify-center ${buttonPresses.right ? 'bg-[#333]' : 'hover:bg-[#333]'}`}
+                          animate={buttonPresses.right ? { x: 2 } : { x: 0 }}
+                        >
+                          <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-300">
+                            <polyline points="9 18 15 12 9 6"></polyline>
+                          </svg>
+                        </motion.button>
+                        
+                        {/* Center */}
+                        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-3 h-3 bg-[#222] rounded-sm"></div>
+                      </div>
                     </div>
                   </div>
                   
-                  {/* Action Buttons (Right) */}
-                  <div className="absolute right-10 top-[calc(50%+5px)] w-20 h-20">
+                  {/* Action Buttons (Right) - Colored buttons in a diamond pattern */}
+                  <div className="absolute right-16 top-1/2 -translate-y-1/2 w-16 h-16">
                     <div className="relative w-full h-full">
-                      {/* Buttons Gray Background */}
-                      <div className="absolute inset-0 w-14 h-14 bg-[#262626] rounded-full shadow-inner"></div>
+                      {/* Buttons Background */}
+                      <div className="absolute inset-0 w-14 h-14 bg-[#333] rounded-full"></div>
                       
-                      {/* Triangle Button (Top) */}
-                      <motion.button
-                        className={`absolute top-0 left-1/2 transform -translate-x-1/2 w-9 h-9 rounded-full bg-[#7F7F7F] text-white flex items-center justify-center ${buttonPresses.y ? 'opacity-80' : 'hover:opacity-90'}`}
-                        whileTap={{ scale: 0.95 }}
-                        animate={buttonPresses.y ? { y: 2 } : { y: 0 }}
-                      >
-                        <div className="w-4 h-4 border-t-2 border-l-2 border-r-2 border-[#222] transform rotate-180"></div>
-                      </motion.button>
-                      
-                      {/* Circle Button (Right) */}
-                      <motion.div
-                        className={`absolute right-0 top-1/2 transform -translate-y-1/2 w-9 h-9 rounded-full bg-[#bc2025] flex items-center justify-center ${buttonPresses.b ? 'opacity-80' : 'hover:opacity-90'}`}
-                        whileTap={{ scale: 0.95 }}
-                        animate={buttonPresses.b ? { x: 2 } : { x: 0 }}
-                      >
-                        <div className="w-5 h-5 rounded-full border-2 border-[#222]"></div>
-                      </motion.div>
-                      
-                      {/* Cross Button (Bottom) */}
-                      <motion.div
-                        className={`absolute bottom-0 left-1/2 transform -translate-x-1/2 w-9 h-9 rounded-full bg-[#2a6db3] flex items-center justify-center ${buttonPresses.x ? 'opacity-80' : 'hover:opacity-90'}`}
-                        onClick={handleSelect}
-                        whileTap={{ scale: 0.95 }}
-                        animate={buttonPresses.x ? { y: -2 } : { y: 0 }}
-                      >
-                        <div className="relative">
-                          <div className="absolute w-5 h-1 bg-[#222] top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></div>
-                          <div className="absolute w-1 h-5 bg-[#222] top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></div>
-                        </div>
-                      </motion.div>
-                      
-                      {/* Square Button (Left) */}
-                      <motion.div
-                        className={`absolute left-0 top-1/2 transform -translate-y-1/2 w-9 h-9 rounded-full bg-[#69be28] flex items-center justify-center ${buttonPresses.a ? 'opacity-80' : 'hover:opacity-90'}`}
-                        whileTap={{ scale: 0.95 }}
-                        animate={buttonPresses.a ? { x: -2 } : { x: 0 }}
-                      >
-                        <div className="w-4 h-4 bg-[#222]"></div>
-                      </motion.div>
+                      {/* Group of colored buttons - match PlayStation style */}
+                      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12">
+                        {/* Triangle (green) Button (Top) */}
+                        <motion.button
+                          className={`absolute top-0 left-1/2 -translate-x-1/2 w-6 h-6 rounded-full bg-green-500 flex items-center justify-center ${buttonPresses.y ? 'opacity-80' : 'hover:opacity-90'}`}
+                          animate={buttonPresses.y ? { y: 2 } : { y: 0 }}
+                        >
+                          <span className="text-[10px] text-white font-bold">▲</span>
+                        </motion.button>
+                        
+                        {/* Circle (red) Button (Right) */}
+                        <motion.button
+                          className={`absolute right-0 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-red-500 flex items-center justify-center ${buttonPresses.b ? 'opacity-80' : 'hover:opacity-90'}`}
+                          animate={buttonPresses.b ? { x: 2 } : { x: 0 }}
+                        >
+                          <span className="text-[10px] text-white font-bold">○</span>
+                        </motion.button>
+                        
+                        {/* Cross (blue) Button (Bottom) */}
+                        <motion.button
+                          className={`absolute bottom-0 left-1/2 -translate-x-1/2 w-6 h-6 rounded-full bg-blue-500 flex items-center justify-center ${buttonPresses.x ? 'opacity-80' : 'hover:opacity-90'}`}
+                          onClick={handleSelect}
+                          animate={buttonPresses.x ? { y: -2 } : { y: 0 }}
+                        >
+                          <span className="text-[10px] text-white font-bold">✕</span>
+                        </motion.button>
+                        
+                        {/* Square (pink) Button (Left) */}
+                        <motion.button
+                          className={`absolute left-0 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-pink-500 flex items-center justify-center ${buttonPresses.a ? 'opacity-80' : 'hover:opacity-90'}`}
+                          animate={buttonPresses.a ? { x: -2 } : { x: 0 }}
+                        >
+                          <span className="text-[10px] text-white font-bold">□</span>
+                        </motion.button>
+                      </div>
                     </div>
+                  </div>
+                  
+                  {/* Central Rectangle - Options and Menu buttons */}
+                  <div className="absolute left-1/2 top-6 -translate-x-1/2 w-28 h-5 bg-[#333] rounded-md flex justify-center items-center space-x-10">
+                    <div className="w-3 h-1 bg-[#222]"></div>
+                    <div className="w-3 h-1 bg-[#222]"></div>
                   </div>
                   
                   {/* Analog Sticks */}
-                  <div className="absolute bottom-8 left-[38%] transform -translate-x-1/2 w-10 h-10">
+                  <div className="absolute bottom-10 left-[38%] -translate-x-1/2 w-10 h-10">
                     <div className="w-full h-full rounded-full bg-[#222] flex items-center justify-center shadow-lg">
                       <div className="w-7 h-7 rounded-full bg-[#3a3a3a]"></div>
                     </div>
                   </div>
                   
-                  <div className="absolute bottom-8 right-[38%] transform translate-x-1/2 w-10 h-10">
+                  <div className="absolute bottom-10 right-[38%] translate-x-1/2 w-10 h-10">
                     <div className="w-full h-full rounded-full bg-[#222] flex items-center justify-center shadow-lg">
                       <div className="w-7 h-7 rounded-full bg-[#3a3a3a]"></div>
                     </div>
                   </div>
                   
                   {/* PS Button */}
-                  <div className="absolute bottom-3 left-1/2 transform -translate-x-1/2 text-xs text-gray-400 font-mono">
-                    <div className="w-6 h-6 rounded-full bg-[#3a3a3a] flex items-center justify-center">
-                      <span className="text-[8px] font-bold">PS</span>
+                  <div className="absolute bottom-2 left-1/2 -translate-x-1/2">
+                    <div className="w-6 h-6 rounded-full bg-[#333] flex items-center justify-center border border-gray-600">
+                      <span className="text-[8px] text-gray-300 font-bold">PS</span>
                     </div>
                   </div>
                 </motion.div>
               </div>
               
               {/* Navigation Menu */}
-              <div className="flex-1 overflow-y-auto p-4 bg-gradient-to-b from-gray-900/40 to-card/40">
+              <div 
+                className="flex-1 overflow-y-auto p-4 bg-gradient-to-b from-gray-900/40 to-card/40"
+                onMouseMove={(e) => {
+                  // Track mouse movement to animate up/down buttons
+                  const currentY = e.clientY;
+                  const lastY = lastMouseY.current || currentY;
+                  
+                  // Only respond to significant movements
+                  if (Math.abs(currentY - lastY) > 5) {
+                    if (currentY < lastY) {
+                      // Moving up
+                      setButtonPresses(prev => ({ ...prev, up: true, down: false }));
+                      
+                      // Reset after a delay
+                      if (scrollTimeout.current) clearTimeout(scrollTimeout.current);
+                      scrollTimeout.current = setTimeout(() => {
+                        setButtonPresses(prev => ({ ...prev, up: false }));
+                      }, 200);
+                    } else if (currentY > lastY) {
+                      // Moving down
+                      setButtonPresses(prev => ({ ...prev, down: true, up: false }));
+                      
+                      // Reset after a delay
+                      if (scrollTimeout.current) clearTimeout(scrollTimeout.current);
+                      scrollTimeout.current = setTimeout(() => {
+                        setButtonPresses(prev => ({ ...prev, down: false }));
+                      }, 200);
+                    }
+                    
+                    // Update last position
+                    lastMouseY.current = currentY;
+                  }
+                }}
+                onMouseLeave={() => {
+                  // Reset buttons when mouse leaves menu area
+                  setButtonPresses(prev => ({ ...prev, up: false, down: false }));
+                  lastMouseY.current = null;
+                }}
+              >
                 <div className="mb-4 text-sm font-mono uppercase text-muted-foreground tracking-wider border-b border-border pb-2">
                   Navigation Menu
                 </div>
