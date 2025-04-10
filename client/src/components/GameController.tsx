@@ -438,6 +438,9 @@ export default function GameController({ onNavigate, isOpen = true, onToggle }: 
                       className={`p-3 rounded-md cursor-pointer flex items-center ${activeIndex === index ? 'bg-primary/20 text-primary border-l-4 border-primary pl-2' : 'hover:bg-card border-l-4 border-transparent pl-2'}`}
                       onClick={() => {
                         setActiveIndex(index);
+                        // Simulate X button press on click
+                        setButtonPresses(prev => ({ ...prev, x: true }));
+                        setTimeout(() => setButtonPresses(prev => ({ ...prev, x: false })), 200);
                         onNavigate(link.href);
                       }}
                       whileHover={{ x: 5 }}

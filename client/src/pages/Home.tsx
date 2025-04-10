@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import HeroSection from "@/components/HeroSection";
 import AboutSection from "@/components/AboutSection";
 import SkillsSection from "@/components/SkillsSection";
@@ -9,13 +9,23 @@ import AchievementsSection from "@/components/AchievementsSection";
 import ContactSection from "@/components/ContactSection";
 import ScrollProgress from "@/components/ScrollProgress";
 import GameController from "@/components/GameController";
+import OldTvScreen from "@/components/OldTvScreen";
 
 export default function Home() {
   const [isControllerOpen, setIsControllerOpen] = useState(true); // Start with controller open
+  const [activeSection, setActiveSection] = useState("hero"); // Track which section is active
+  const [isTvOn, setIsTvOn] = useState(true); // TV screen state
+  const contentRef = useRef<HTMLDivElement>(null);
+  
+  // Extract section ID from hash
+  const getSectionId = (hash: string) => {
+    return hash.startsWith('#') ? hash.substring(1) : hash;
+  };
   
   // Handle smooth scrolling for anchor links
   const handleSmoothScroll = (hash: string) => {
-    const targetElement = document.querySelector(hash);
+    const sectionId = getSectionId(hash);
+    const targetElement = document.getElementById(sectionId);
     
     if (targetElement) {
       window.scrollTo({
@@ -27,7 +37,17 @@ export default function Home() {
   
   // Handle controller navigation
   const handleControllerNavigate = (hash: string) => {
-    handleSmoothScroll(hash);
+    // Turn off TV briefly for transition effect
+    setIsTvOn(false);
+    
+    const sectionId = getSectionId(hash);
+    setActiveSection(sectionId);
+    
+    // Short delay before turning TV back on
+    setTimeout(() => {
+      setIsTvOn(true);
+      handleSmoothScroll(hash);
+    }, 300);
   };
 
   useEffect(() => {
@@ -37,7 +57,18 @@ export default function Home() {
       
       if (anchor && anchor.hash && anchor.hash.startsWith('#')) {
         e.preventDefault();
-        handleSmoothScroll(anchor.hash);
+        
+        // Get section ID from hash and use TV effect
+        const sectionId = getSectionId(anchor.hash);
+        
+        // Use same TV effect as controller navigation
+        setIsTvOn(false);
+        setActiveSection(sectionId);
+        
+        setTimeout(() => {
+          setIsTvOn(true);
+          handleSmoothScroll(anchor.hash);
+        }, 300);
       }
     };
 
@@ -87,16 +118,20 @@ export default function Home() {
         </svg>
       </button>
       
-      {/* Main content with left margin when controller is open */}
-      <div className={`transition-all duration-300 ease-in-out ${isControllerOpen ? 'ml-[300px]' : 'ml-0'}`}>
-        <HeroSection />
-        <AboutSection />
-        <SkillsSection />
-        <ExperienceSection />
-        <ProjectsSection />
-        <EducationSection />
-        <AchievementsSection />
-        <ContactSection />
+      {/* Main content with Old TV effect and left margin when controller is open */}
+      <div className={`transition-all duration-300 ease-in-out p-6 ${isControllerOpen ? 'ml-[300px]' : 'ml-0'}`}>
+        <OldTvScreen isOn={isTvOn} section={activeSection}>
+          <div ref={contentRef} className="relative overflow-y-auto">
+            <HeroSection />
+            <AboutSection />
+            <SkillsSection />
+            <ExperienceSection />
+            <ProjectsSection />
+            <EducationSection />
+            <AchievementsSection />
+            <ContactSection />
+          </div>
+        </OldTvScreen>
       </div>
     </div>
   );
