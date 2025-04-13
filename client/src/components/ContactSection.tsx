@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { RectangleEllipsis, MapPin, Github, Linkedin, Twitter, Send } from "lucide-react";
+import { RectangleEllipsis, Github, Linkedin, Send } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 // Form validation schema
@@ -84,7 +84,7 @@ export default function ContactSection() {
           variants={staggerContainer}
           initial="hidden"
           whileInView="show"
-          viewport={{ once: true, amount: 0.25 }}
+          viewport={{ once: false, amount: 0.25 }}
           className="text-center mb-16"
         >
           <motion.h2 
@@ -107,7 +107,7 @@ export default function ContactSection() {
             variants={fadeIn("right", 0.3)}
             initial="hidden"
             whileInView="show"
-            viewport={{ once: true, amount: 0.25 }}
+            viewport={{ once: false, amount: 0.25 }}
             className="lg:col-span-2"
           >
             <div className="space-y-8">
@@ -134,16 +134,6 @@ export default function ContactSection() {
                     </a>
                   </div>
                 </div>
-                
-                <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 flex items-center justify-center bg-card rounded-lg text-primary">
-                    <MapPin size={20} />
-                  </div>
-                  <div>
-                    <h5 className="text-foreground font-medium mb-1">Location</h5>
-                    <p className="text-muted-foreground">{personalInfo.location}</p>
-                  </div>
-                </div>
               </div>
               
               <div>
@@ -165,14 +155,6 @@ export default function ContactSection() {
                   >
                     <Linkedin size={20} />
                   </a>
-                  <a 
-                    href={personalInfo.socialLinks.twitter} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="w-10 h-10 flex items-center justify-center bg-card rounded-lg text-muted-foreground hover:text-primary hover:bg-muted transition-all duration-300"
-                  >
-                    <Twitter size={20} />
-                  </a>
                 </div>
               </div>
             </div>
@@ -183,7 +165,7 @@ export default function ContactSection() {
             variants={fadeIn("left", 0.3)}
             initial="hidden"
             whileInView="show"
-            viewport={{ once: true, amount: 0.25 }}
+            viewport={{ once: false, amount: 0.25 }}
             className="lg:col-span-3"
           >
             <Card className="bg-card border border-border">

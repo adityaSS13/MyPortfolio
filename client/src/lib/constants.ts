@@ -8,7 +8,6 @@ export const personalInfo = {
   socialLinks: {
     github: "https://github.com/aditya-shahapure",
     linkedin: "https://linkedin.com/in/adishahapure",
-    twitter: "https://twitter.com",
     email: "mailto:adishahapure@gmail.com"
   }
 };
@@ -51,7 +50,7 @@ export const skillCategories = [
     title: "Libraries / Frameworks",
     skills: [
       { name: "TensorFlow", icon: "SiTensorflow" },
-      { name: "Sklearn", icon: "SiScikit" },
+      { name: "Sklearn", icon: "SiScikitlearn" },
       { name: "Pandas", icon: "SiPandas" },
       { name: "NumPy", icon: "SiNumpy" },
       { name: "PyTorch", icon: "SiPytorch" },
@@ -79,28 +78,52 @@ export const skillCategories = [
 // Experience
 export const experiences = [
   {
-    title: "Graduate Research Assistant",
-    company: "Indiana University Bloomington",
-    period: "May 2023 - May 2024",
-    description: "Developed REST API for custom Generative AI LLM models in Python and Flask, enabling user requests for AI-based entity analysis. Orchestrated cloud solutions on AWS EC2 with Docker for over 500 simultaneous requests from collaborative research projects.",
-    technologies: ["Python", "Flask", "AWS", "Docker", "LLM"],
+    title: "Research Data Scientist",
+    company: "Project-990",
+    period: "Aug 2024 - Dec 2024",
+    description: "Leveraged advanced NLP techniques to classify 270,000+ nonprofit mission statements using RoBERTa and Zephyr LLM. Optimized processing with HPC cluster computing, reducing classification time by 12 hours and manual effort by 60% through innovative model implementation.",
+    technologies: ["NLP", "RoBERTa", "Zephyr LLM", "HPC"],
+    color: "primary"
+  },
+  {
+    title: "Graduate Teaching Assistant",
+    company: "IU Luddy School of Informatics & CS",
+    period: "Aug 2024 - Dec 2024",
+    description: "Facilitated JavaScript learning for 35 students through hands-on coding activities and personalized office hours, enhancing their technical proficiency and problem-solving skills in web development.",
+    technologies: ["JavaScript", "Web Development", "Teaching"],
+    color: "secondary"
+  },
+  {
+    title: "Graduate Teaching Assistant",
+    company: "IU O'Neill School of Public & Environmental Affairs",
+    period: "Aug 2024 - Dec 2024",
+    description: "Guided 32 public affairs students in mastering technical tools including Excel, Tableau, GenAI, and web development, bridging the gap between technology and public policy applications.",
+    technologies: ["Excel", "Tableau", "GenAI", "Web Development"],
+    color: "info"
+  },
+  {
+    title: "Software Development Engineer Intern",
+    company: "Soloist",
+    period: "June 2024 - Dec 2024",
+    description: "Developed a music collaboration iOS app using React Native, implementing user-centric features and database functionality. Established code review processes and CI/CD pipelines that streamlined development in an Agile environment.",
+    technologies: ["React Native", "iOS", "CI/CD", "Agile"],
+    color: "success"
+  },
+  {
+    title: "Graduate Teaching Assistant",
+    company: "IU School of Public Health",
+    period: "August 2023 - June 2024",
+    description: "Supported multiple public health courses through administrative assistance, student mentoring, and academic assessment, helping students navigate complex health concepts and course requirements.",
+    technologies: ["Mentoring", "Assessment", "Public Health"],
     color: "primary"
   },
   {
     title: "Software Engineer",
     company: "Vodafone Intelligent Solutions",
-    period: "July 2019 - July 2022",
-    description: "Led development of a MEAN stack Customer Experience Management App that improved customer satisfaction metrics by 30% through interactive dashboards and data-driven insights. Engineered Python data pipelines to provide seamless data access for different business units across 30+ countries.",
-    technologies: ["MEAN Stack", "Python", "ETL", "Analytics"],
+    period: "August 2020 - April 2024",
+    description: "Managed enterprise Java systems processing 10K+ daily orders while maintaining 12 servers for Vodafone-Germany. Resolved technical incidents using SQL and Linux tools, optimizing change management processes and reducing deployment time by 35%.",
+    technologies: ["Java", "SQL", "Linux", "Enterprise Systems"],
     color: "secondary"
-  },
-  {
-    title: "Data Science Intern",
-    company: "Quantiphi Inc.",
-    period: "Feb 2019 - June 2019",
-    description: "Created Python deep learning models for speech analytics and sentiment analysis. Specialized in implementing data transformation pipelines and visualization dashboards for clients in the healthcare sector.",
-    technologies: ["Python", "TensorFlow", "NLP", "Data Analysis"],
-    color: "info"
   }
 ];
 
@@ -142,13 +165,13 @@ export const education = [
     degree: "Master of Science in Computer Science",
     institution: "Indiana University Bloomington",
     period: "2022 - 2024",
-    description: "Specialized in Data Science, Machine Learning, and Software Engineering. Completed coursework in Advanced AI, Cloud Computing, and Database Systems. Achieved a GPA of 3.9/4.0."
+    description: "GPA: 3.9/4.0"
   },
   {
     degree: "Bachelor of Engineering in Computer Engineering",
     institution: "Mumbai University",
     period: "2015 - 2019",
-    description: "Focused on algorithms, data structures, and software development. Participated in multiple hackathons and coding competitions. Graduated with First Class Honors."
+    description: "GPA: 8.78/10.0"
   }
 ];
 

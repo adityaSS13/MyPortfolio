@@ -1,10 +1,25 @@
 import { motion } from "framer-motion";
 import { fadeIn, slideIn, typing } from "@/lib/animation";
 import { personalInfo } from "@/lib/constants";
-import { ChevronDown, ArrowRight, Github, Linkedin, Twitter, Mail } from "lucide-react";
+import { ChevronDown, ArrowRight, Github, Linkedin, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export default function HeroSection() {
+  // Animation for name hover effect
+  const nameAnimation = {
+    initial: { 
+      color: "#f8fafc" // Default light text color
+    },
+    hover: { 
+      color: "#3b82f6", // Primary color on hover
+      transition: { 
+        duration: 0.3,
+        yoyo: Infinity,
+        ease: "easeInOut" 
+      }
+    }
+  };
+
   return (
     <section
       id="home"
@@ -36,9 +51,14 @@ export default function HeroSection() {
               variants={fadeIn("up", 0.2)}
               className="text-4xl md:text-6xl font-bold mb-2"
             >
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary via-secondary to-info bg-size-200 animate-gradient-x">
+              <motion.span 
+                initial="initial"
+                whileHover="hover"
+                variants={nameAnimation}
+                className="text-foreground"
+              >
                 {personalInfo.name}
-              </span>
+              </motion.span>
             </motion.h1>
             
             <motion.div 
@@ -108,14 +128,6 @@ export default function HeroSection() {
                 className="text-muted-foreground hover:text-primary transition-colors duration-300 text-xl"
               >
                 <Linkedin size={24} />
-              </a>
-              <a 
-                href={personalInfo.socialLinks.twitter} 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-primary transition-colors duration-300 text-xl"
-              >
-                <Twitter size={24} />
               </a>
               <a 
                 href={personalInfo.socialLinks.email} 

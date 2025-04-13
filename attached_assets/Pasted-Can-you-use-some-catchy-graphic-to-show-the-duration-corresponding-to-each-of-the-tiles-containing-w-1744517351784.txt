@@ -1,0 +1,42 @@
+Can you use some catchy graphic to show the duration corresponding to each of the tiles containing work experience? Something like an opening/closing curly bracket, similar to an arrow. Use this for the work experience section:
+
+Title: Research Data Scientist 
+Company: Project-990
+Duration: Aug 2024 - Dec 2024
+Leveraged advanced NLP techniques to classify 270,000+ nonprofit mission statements using RoBERTa and Zephyr LLM. Optimized processing with HPC cluster computing, reducing classification time by 12 hours and manual effort by 60% through innovative model implementation.
+
+Title: Graduate Teaching Assistant
+Company: IU Luddy School of Informatics & CS
+Duration: Aug 2024 - Dec 2024
+Facilitated JavaScript learning for 35 students through hands-on coding activities and personalized office hours, enhancing their technical proficiency and problem-solving skills in web development.
+
+Title: Graduate Teaching Assistant 
+Company: IU O'Neill School of Public & Environmental Affairs
+Duration: Aug 2024 - Dec 2024
+Guided 32 public affairs students in mastering technical tools including Excel, Tableau, GenAI, and web development, bridging the gap between technology and public policy applications.
+
+Title: Software Development Engineer Intern
+Company: Soloist
+Duration: June 2024 - Dec 2024
+Developed a music collaboration iOS app using React Native, implementing user-centric features and database functionality. Established code review processes and CI/CD pipelines that streamlined development in an Agile environment.
+
+Title: Graduate Teaching Assistant 
+Company: IU School of Public Health
+Duration: August 2023 - June 2024
+Supported multiple public health courses through administrative assistance, student mentoring, and academic assessment, helping students navigate complex health concepts and course requirements.
+
+Title: Software Engineer 
+Company: Vodafone Intelligent Solutions
+Duration: August 2020 - April 2024
+Managed enterprise Java systems processing 10K+ daily orders while maintaining 12 servers for Vodafone-Germany. Resolved technical incidents using SQL and Linux tools, optimizing change management processes and reducing deployment time by 35%.
+
+
+Also, please add logos for Java, VS-Code, PowerBI, Excel, AWS and Sklearn, as they seem to be missing currently
+
+Replace the content 'Specialized in Data Science, Machine Learning, and Software Engineering. Completed coursework in Advanced AI, Cloud Computing, and Database Systems. Achieved a GPA of 3.9/4.0.' with 'GPA: 3.9/4.0' and 'Focused on algorithms, data structures, and software development. Participated in multiple hackathons and coding competitions. Graduated with First Class Honors.' with 'GPA: 8.78/10.0'
+
+In 'Let's connect' section, remove Location and the corresponding symbol.
+
+For my name 'Aditya Shahapure', do not use any gradient. You can rather use some catchy animation which triggers after hovering mouse over it.
+
+Remove the twitter option too
