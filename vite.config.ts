@@ -6,7 +6,7 @@ import runtimeErrorOverlay from "@replit/vite-plugin-runtime-error-modal";
 import svgr from "vite-plugin-svgr";
 
 export default defineConfig({
-  base: "./",
+  base: "/",
   plugins: [
     react(),
     runtimeErrorOverlay(),
@@ -32,8 +32,9 @@ export default defineConfig({
       "@assets": path.resolve(import.meta.dirname, "attached_assets"),
     },
   },
-  root: path.resolve(import.meta.dirname, "client"),
+  root: path.resolve(__dirname, "client"), // ✅ client folder contains index.html
   build: {
-    outDir: "dist",
+    outDir: path.resolve(__dirname, "dist"), // ✅ Output to root-level dist
+    emptyOutDir: true,
   },
 });
