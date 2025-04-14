@@ -6,6 +6,7 @@ import runtimeErrorOverlay from "@replit/vite-plugin-runtime-error-modal";
 import svgr from "vite-plugin-svgr";
 
 export default defineConfig({
+  base: "/",
   plugins: [
     react(),
     runtimeErrorOverlay(),
