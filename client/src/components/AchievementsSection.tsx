@@ -8,27 +8,27 @@ export default function AchievementsSection() {
   return (
     <section id="achievements" className="py-20 bg-background">
       <div className="container mx-auto px-6">
-        <motion.div 
+        <motion.div
           variants={staggerContainer}
           initial="hidden"
           whileInView="show"
           viewport={{ once: false, amount: 0.25 }}
           className="text-center mb-16"
         >
-          <motion.h2 
+          <motion.h2
             variants={fadeIn("up", 0.1)}
             className="text-sm uppercase tracking-wider text-primary mb-2"
           >
             My Accomplishments
           </motion.h2>
-          <motion.h3 
+          <motion.h3
             variants={fadeIn("up", 0.2)}
             className="text-3xl font-bold"
           >
             Achievements
           </motion.h3>
         </motion.div>
-        
+
         <div className="max-w-3xl mx-auto">
           <motion.div
             variants={fadeIn("up", 0.3)}
@@ -52,10 +52,16 @@ export default function AchievementsSection() {
                         </div>
                         <div className="flex-1">
                           <div className="flex justify-between items-start mb-2">
-                            <h5 className="text-lg font-semibold text-foreground">{achievement.title}</h5>
-                            <span className="text-muted-foreground text-sm">{achievement.year}</span>
+                            <h5 className="text-lg font-semibold text-foreground">
+                              {achievement.title}
+                            </h5>
+                            <span className="text-muted-foreground text-sm">
+                              {achievement.year}
+                            </span>
                           </div>
-                          <h6 className="text-secondary mb-3 text-sm">{achievement.organization}</h6>
+                          <h6 className="text-white mb-3 text-sm">
+                            {achievement.organization}
+                          </h6>
                           <p className="text-muted-foreground text-sm">
                             {achievement.description}
                           </p>

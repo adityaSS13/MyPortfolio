@@ -14,22 +14,25 @@ export default function Navbar() {
     const handleScroll = () => {
       // Change navbar background on scroll
       setScrolled(window.scrollY > 20);
-      
+
       // Update active section based on scroll position
       const sections = document.querySelectorAll("section[id]");
       const scrollPosition = window.scrollY + 100;
-      
+
       sections.forEach((section) => {
         const sectionTop = (section as HTMLElement).offsetTop;
         const sectionHeight = section.clientHeight;
         const sectionId = section.getAttribute("id") || "";
-        
-        if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+
+        if (
+          scrollPosition >= sectionTop &&
+          scrollPosition < sectionTop + sectionHeight
+        ) {
           setActiveSection(sectionId);
         }
       });
     };
-    
+
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -44,18 +47,24 @@ export default function Navbar() {
   };
 
   // Get first name and last initial
-  const nameInitials = personalInfo.name.split(' ');
+  const nameInitials = personalInfo.name.split(" ");
   const firstNameInitial = nameInitials[0][0];
-  const lastNameInitial = nameInitials.length > 1 ? nameInitials[1][0] : '';
+  const lastNameInitial = nameInitials.length > 1 ? nameInitials[1][0] : "";
 
   return (
-    <header className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? "bg-background/80 backdrop-blur-md border-b border-border" : "bg-transparent"}`}>
+    <header
+      className={`fixed w-full z-50 transition-all duration-300 ${
+        scrolled
+          ? "bg-background/80 backdrop-blur-md border-b border-border"
+          : "bg-transparent"
+      }`}
+    >
       <nav className="container mx-auto px-6 py-3 flex justify-between items-center">
         <Link href="/" className="text-2xl font-semibold flex items-center">
           <span className="text-primary">{firstNameInitial}</span>
           <span className="text-secondary">{lastNameInitial}</span>
         </Link>
-        
+
         {/* Desktop Navigation */}
         <div className="hidden md:flex space-x-8 text-sm">
           {navLinks.map((link) => (
@@ -73,17 +82,17 @@ export default function Navbar() {
             </a>
           ))}
         </div>
-        
+
         {/* Mobile Menu Button */}
-        <button 
-          onClick={toggleMobileMenu} 
+        <button
+          onClick={toggleMobileMenu}
           className="md:hidden text-muted-foreground hover:text-primary transition-colors duration-300"
           aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
         >
           {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
       </nav>
-      
+
       {/* Mobile Menu */}
       <AnimatePresence>
         {mobileMenuOpen && (

@@ -3,37 +3,38 @@ import { fadeIn, staggerContainer } from "@/lib/animation";
 import { skillCategories } from "@/lib/constants";
 import * as SiIcons from "react-icons/si";
 import { Card, CardContent } from "@/components/ui/card";
+import * as FaIcons from "react-icons/fa";
 
 export default function SkillsSection() {
   return (
     <section id="skills" className="py-20 bg-background">
       <div className="container mx-auto px-6">
-        <motion.div 
+        <motion.div
           variants={staggerContainer}
           initial="hidden"
           whileInView="show"
           viewport={{ once: false, amount: 0.25 }}
           className="text-center mb-16"
         >
-          <motion.h2 
+          <motion.h2
             variants={fadeIn("up", 0.1)}
             className="text-sm uppercase tracking-wider text-primary mb-2"
           >
             My Skills
           </motion.h2>
-          <motion.h3 
+          <motion.h3
             variants={fadeIn("up", 0.2)}
             className="text-3xl font-bold"
           >
             Skills
           </motion.h3>
         </motion.div>
-        
+
         {/* Skill Categories */}
         {skillCategories.map((category, categoryIndex) => (
           <motion.div
             key={category.title}
-            variants={fadeIn("up", 0.3 + (0.1 * categoryIndex))}
+            variants={fadeIn("up", 0.3 + 0.1 * categoryIndex)}
             initial="hidden"
             whileInView="show"
             viewport={{ once: false, amount: 0.25 }}
@@ -42,12 +43,14 @@ export default function SkillsSection() {
             <h4 className="text-xl font-semibold mb-8 text-center">
               {category.title}
             </h4>
-            
+
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
               {category.skills.map((skill, index) => {
                 // Dynamically get the icon from react-icons/si
-                const IconComponent = SiIcons[skill.icon as keyof typeof SiIcons];
-                
+                const IconComponent =
+                  SiIcons[skill.icon as keyof typeof SiIcons] ||
+                  FaIcons[skill.icon as keyof typeof FaIcons];
+
                 return (
                   <motion.div
                     key={skill.name}
@@ -62,7 +65,9 @@ export default function SkillsSection() {
                             <IconComponent />
                           </div>
                         )}
-                        <p className="text-sm font-medium text-center">{skill.name}</p>
+                        <p className="text-sm font-medium text-center">
+                          {skill.name}
+                        </p>
                       </CardContent>
                     </Card>
                   </motion.div>
