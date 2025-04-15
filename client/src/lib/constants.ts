@@ -127,7 +127,7 @@ export const experiences = [
   {
     title: "Software Engineer",
     company: "Vodafone Intelligent Solutions",
-    period: "Aug 2020 - April 2024",
+    period: "Aug 2020 - April 2022",
     description:
       "Managed enterprise Java systems processing 10K+ daily orders while maintaining 12 servers for Vodafone-Germany. Resolved technical incidents using SQL and Linux tools, optimizing change management processes and reducing deployment time by 35%.",
     technologies: ["Java", "SQL", "Linux", "Enterprise Systems"],
