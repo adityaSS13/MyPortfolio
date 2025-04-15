@@ -41,9 +41,16 @@ export default function Navbar() {
     setMobileMenuOpen(!mobileMenuOpen);
   };
 
-  // Close mobile menu when clicking a link
-  const handleLinkClick = () => {
+  // Close mobile menu and navigate to section when clicking a link
+  const handleLinkClick = (
+    event: React.MouseEvent<HTMLAnchorElement>,
+    href: string
+  ) => {
+    event.preventDefault(); // Prevent default anchor behavior
     if (mobileMenuOpen) setMobileMenuOpen(false);
+    const targetSection = document.querySelector(href);
+    targetSection?.scrollIntoView({ behavior: "smooth" }); // Smooth scroll to the section
+    window.location.hash = href; // Update the browser's location hash
   };
 
   // Get first name and last initial
@@ -76,7 +83,7 @@ export default function Navbar() {
                   ? "text-foreground"
                   : "text-muted-foreground"
               } hover:text-primary transition duration-300`}
-              onClick={handleLinkClick}
+              onClick={(event) => handleLinkClick(event, link.href)} // Pass event and href
             >
               {link.name}
             </a>
@@ -113,7 +120,7 @@ export default function Navbar() {
                       ? "text-foreground"
                       : "text-muted-foreground"
                   } hover:text-primary py-2 transition duration-300`}
-                  onClick={handleLinkClick}
+                  onClick={(event) => handleLinkClick(event, link.href)} // Pass event and href
                 >
                   {link.name}
                 </a>
