@@ -30,7 +30,7 @@ const ResumeSection: React.FC = () => {
         <iframe
           src={resumePDF} // Use the imported PDF as the source
           title="Aditya Shahapure Resume"
-          className="resume-iframe mx-auto my-auto w-full max-w-4xl h-[187vh] border-2 border-primary"
+          className="resume-iframe mx-auto my-auto w-full max-w-4xl h-screen border-2 border-primary"
         ></iframe>
       </div>
     </section>
