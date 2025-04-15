@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter"; // Import useLocation
 import { motion, AnimatePresence } from "framer-motion";
 import { navLinks, personalInfo } from "@/lib/constants";
 import { Menu, X } from "lucide-react";
@@ -8,6 +8,7 @@ export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
   const [scrolled, setScrolled] = useState(false);
+  const [, setLocation] = useLocation(); // Destructure setLocation from useLocation
 
   // Handle scroll events to update active section and navbar appearance
   useEffect(() => {
@@ -41,22 +42,23 @@ export default function Navbar() {
     setMobileMenuOpen(!mobileMenuOpen);
   };
 
-  // Close mobile menu and navigate to section when clicking a link
+  // Close mobile menu when clicking a link
   const handleLinkClick = (
     event: React.MouseEvent<HTMLAnchorElement>,
-    href: string
+    sectionId: string
   ) => {
     event.preventDefault(); // Prevent default anchor behavior
-  // Close mobile menu and navigate to section when clicking a link
-  const handleLinkClick = (
-    event: React.MouseEvent<HTMLAnchorElement>,
-    href: string
-  ) => {
-    event.preventDefault(); // Prevent default anchor behavior
+    setActiveSection(sectionId);
+    setLocation(`#${sectionId}`); // Update the URL hash
     if (mobileMenuOpen) setMobileMenuOpen(false);
-    const targetSection = document.querySelector(href);
-    targetSection?.scrollIntoView({ behavior: "smooth" }); // Smooth scroll to the section
-    window.location.hash = href; // Update the browser's location hash
+
+    // Delay smooth scrolling to ensure URL hash is updated
+    setTimeout(() => {
+      const section = document.getElementById(sectionId);
+      if (section) {
+        section.scrollIntoView({ behavior: "smooth" });
+      }
+    }, 100); // Adjust timeout as needed
   };
 
   // Get first name and last initial
@@ -89,8 +91,9 @@ export default function Navbar() {
                   ? "text-foreground"
                   : "text-muted-foreground"
               } hover:text-primary transition duration-300`}
-              onClick={(event) => handleLinkClick(event, link.href)} // Pass event and href
-              onClick={(event) => handleLinkClick(event, link.href)} // Pass event and href
+              onClick={(event) =>
+                handleLinkClick(event, link.href.substring(1))
+              }
             >
               {link.name}
             </a>
@@ -127,8 +130,9 @@ export default function Navbar() {
                       ? "text-foreground"
                       : "text-muted-foreground"
                   } hover:text-primary py-2 transition duration-300`}
-                  onClick={(event) => handleLinkClick(event, link.href)} // Pass event and href
-                  onClick={(event) => handleLinkClick(event, link.href)} // Pass event and href
+                  onClick={(event) =>
+                    handleLinkClick(event, link.href.substring(1))
+                  }
                 >
                   {link.name}
                 </a>
