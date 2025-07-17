@@ -80,7 +80,16 @@ export const skillCategories = [
 // Experience
 export const experiences = [
   {
-    title: "Research Data Scientist",
+    title: "Software Engineer Consultant",
+    company: "Heartland Community Network",
+    period: "Aug 2024 - Dec 2024",
+    description:
+      "Volunteered to lead client requirements gathering and feasibility analysis for data monetization MVP, conducting stakeholder meetings and researching platform capabilities; collaborated to design UI screens and build proof-of-concept mobile app components",
+    technologies: ["Figma", "Android Studio", "Kotlin", "Gemini", "Copilot"],
+    color: "primary",
+  },
+  {
+    title: "AI Engineer Intern",
     company: "Project-990",
     period: "Aug 2024 - Dec 2024",
     description:
@@ -89,7 +98,7 @@ export const experiences = [
     color: "primary",
   },
   {
-    title: "Graduate Teaching Assistant",
+    title: "Associate Instructor",
     company: "IU Luddy School of Informatics & CS",
     period: "Aug 2024 - Dec 2024",
     description:
@@ -98,7 +107,7 @@ export const experiences = [
     color: "primary",
   },
   {
-    title: "Graduate Teaching Assistant",
+    title: "Associate Instructor",
     company: "IU O'Neill School of Public & Environmental Affairs",
     period: "Aug 2024 - Dec 2024",
     description:
